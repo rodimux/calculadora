@@ -1039,8 +1039,9 @@ C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\refint\CalculadoraCostes.Web.dll
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\CalculadoraCostes.Web.pdb
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\ref\CalculadoraCostes.Web.dll
-C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\cnv1ngcsbh-vanmfoqgkg.gz
-C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\67cygoo1kd-x3ev2mh72k.gz
-C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\g1dfjmbt4t-aqw370vl72.gz
-C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\0voqxvcjor-1x8kr7id1v.gz
-C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\5ejfpd5xdl-wsrmwgqoec.gz
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\CalculadoraCostes.Web.sourcelink.json
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\cnv1ngcsbh-ls4ejwzcjv.gz
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\67cygoo1kd-6z5inuit8d.gz
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\g1dfjmbt4t-ywbcfwoizh.gz
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\0voqxvcjor-3kvux7hevu.gz
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Web\obj\Debug\net8.0\compressed\5ejfpd5xdl-96oz2n53p0.gz

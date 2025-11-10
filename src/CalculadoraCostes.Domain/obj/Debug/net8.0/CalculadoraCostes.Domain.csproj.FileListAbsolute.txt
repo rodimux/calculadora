@@ -9,3 +9,4 @@ C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\o
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\refint\CalculadoraCostes.Domain.dll
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\CalculadoraCostes.Domain.pdb
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\ref\CalculadoraCostes.Domain.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\CalculadoraCostes.Domain.sourcelink.json

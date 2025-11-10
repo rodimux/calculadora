@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "CalculadoraCostes.Web",
   "resources": {
-    "hash": "sha256-s0NDgZva2rwlCbE6yVX1vuErvrIA/mD95FIvJiyqlwk=",
+    "hash": "sha256-lLQA/8+03x7ElOx61wz7pqZmz3QyQ8BsCK/jKwlq+gc=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-9Fzd5We95Rp03dEKIAbYjPDR3eWyLbmjMlYStvxyiok="
     },
@@ -209,12 +209,12 @@
       "mscorlib.wasm": "sha256-MZJ1V6miMP318lQowft4FPkcszcibPLDTwKj235fSAc=",
       "netstandard.wasm": "sha256-RYAURbR1AHkUZYjKgu+B/i3N3VP4abnAaH+vxwJ8d3c=",
       "System.Private.CoreLib.wasm": "sha256-4YzdATaWUDkUkRpe+hl+T61TaCjRVapVUtqTIai3Gd8=",
-      "CalculadoraCostes.Contracts.wasm": "sha256-iXHAI19CP2ihhJcR77mJuFk+ygTEVxw4A3dTa7xPtZ4=",
-      "CalculadoraCostes.Web.wasm": "sha256-cl8zkFIfs6tDzwFqLOsjEESZpGNS5m3FSWXaT3D4ks8="
+      "CalculadoraCostes.Contracts.wasm": "sha256-xbK+xyMQOL9Lci5wct81rRY3EhfDS2bqg37AXbJKuhI=",
+      "CalculadoraCostes.Web.wasm": "sha256-rklxrwj15ZDw9FGTKXoOTPcZB1IToGHmoqJ9YEkDdxI="
     },
     "pdb": {
-      "CalculadoraCostes.Contracts.pdb": "sha256-LYO5jJMR0J4obFNnnxt7fhNJ230gkd+tkVh5arrenU4=",
-      "CalculadoraCostes.Web.pdb": "sha256-274ttXxpIL6KaVc1ALoW+4MZJgo8dmdCzHZFiTRdCwE="
+      "CalculadoraCostes.Contracts.pdb": "sha256-wv1BXDxE0Bt0pr0+iVKNjQPmvQ/t9PRoWPWKuMmGmsU=",
+      "CalculadoraCostes.Web.pdb": "sha256-vTcTDO7gvm2xgMhaCIAveETXdwusLP3f6ZVqA4UmmXI="
     }
   },
   "cacheBootResources": true,

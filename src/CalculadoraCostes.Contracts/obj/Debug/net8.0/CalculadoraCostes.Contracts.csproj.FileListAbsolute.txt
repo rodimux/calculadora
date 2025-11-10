@@ -9,3 +9,4 @@ C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contract
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\refint\CalculadoraCostes.Contracts.dll
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\CalculadoraCostes.Contracts.pdb
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\ref\CalculadoraCostes.Contracts.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\CalculadoraCostes.Contracts.sourcelink.json

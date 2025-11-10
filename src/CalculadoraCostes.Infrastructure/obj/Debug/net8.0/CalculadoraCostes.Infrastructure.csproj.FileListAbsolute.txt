@@ -19,3 +19,4 @@ C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Infrastr
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Infrastructure\obj\Debug\net8.0\CalculadoraCostes.Infrastructure.pdb
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Infrastructure\obj\Debug\net8.0\CalculadoraCostes.Infrastructure.genruntimeconfig.cache
 C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Infrastructure\obj\Debug\net8.0\ref\CalculadoraCostes.Infrastructure.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Infrastructure\obj\Debug\net8.0\CalculadoraCostes.Infrastructure.sourcelink.json

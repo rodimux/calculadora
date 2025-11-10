@@ -15,9 +15,19 @@ public static class ServiceCollectionExtensions
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        var provider = configuration["DatabaseProvider"] ?? "SqlServer";
 
         services.AddDbContext<CalculadoraDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        {
+            if (provider.Equals("Sqlite", StringComparison.OrdinalIgnoreCase))
+            {
+                options.UseSqlite(connectionString);
+            }
+            else
+            {
+                options.UseSqlServer(connectionString);
+            }
+        });
 
         services.AddScoped<IEnergyRepository, EnergyRepository>();
         services.AddScoped<ISystemParameterRepository, SystemParameterRepository>();
