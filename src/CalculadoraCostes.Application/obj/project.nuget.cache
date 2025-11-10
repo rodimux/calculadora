@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "CsX/WaWxJrk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rodrigo.sanandres\\DevRodimux\\calculadora\\src\\CalculadoraCostes.Application\\CalculadoraCostes.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rodrigo.sanandres\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.2\\microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

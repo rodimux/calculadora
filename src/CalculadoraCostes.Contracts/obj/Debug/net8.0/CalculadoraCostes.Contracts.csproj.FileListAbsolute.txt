@@ -1,0 +1,11 @@
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\bin\Debug\net8.0\CalculadoraCostes.Contracts.deps.json
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\bin\Debug\net8.0\CalculadoraCostes.Contracts.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\bin\Debug\net8.0\CalculadoraCostes.Contracts.pdb
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\CalculadoraCostes.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\CalculadoraCostes.Contracts.AssemblyInfoInputs.cache
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\CalculadoraCostes.Contracts.AssemblyInfo.cs
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\CalculadoraCostes.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\CalculadoraCostes.Contracts.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\refint\CalculadoraCostes.Contracts.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\CalculadoraCostes.Contracts.pdb
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Contracts\obj\Debug\net8.0\ref\CalculadoraCostes.Contracts.dll

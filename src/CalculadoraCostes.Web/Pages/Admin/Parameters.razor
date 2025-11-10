@@ -1,0 +1,231 @@
+@page "/admin/parameters"
+@inject Services.ApiClient ApiClient
+
+<PageTitle>Administración - Parámetros</PageTitle>
+
+<h1>Constantes y parámetros</h1>
+
+@if (_isLoading)
+{
+    <p class="status">Cargando parámetros...</p>
+}
+else if (!string.IsNullOrEmpty(_error))
+{
+    <p class="status error">@_error</p>
+}
+else
+{
+    <div class="admin-actions parameter-actions">
+        <button class="btn-secondary" @onclick="ShowAddForm" disabled="@_saving">Añadir parámetro</button>
+        <button class="btn-secondary" @onclick="ImportSampleParametersAsync" disabled="@_saving">Importar desde Excel (ejemplo)</button>
+    </div>
+
+    if (_showAddForm)
+    {
+        <section class="card parameter-form">
+            <header class="card-header">
+                <div>
+                    <h2>Nuevo parámetro</h2>
+                    <p>Introduce los datos básicos y guarda para añadirlo a la lista.</p>
+                </div>
+            </header>
+            <div class="card-body form-grid">
+                <label>Nombre
+                    <InputText class="form-control" @bind-Value="_newParameter.Name" />
+                </label>
+                <label>Clave
+                    <InputText class="form-control" @bind-Value="_newParameter.Key" />
+                </label>
+                <label>Categoría
+                    <InputSelect class="form-control" @bind-Value="_newParameter.Category">
+                        @foreach (var category in _categories)
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    </InputSelect>
+                </label>
+                <label>Unidad
+                    <InputText class="form-control" @bind-Value="_newParameter.Unit" />
+                </label>
+                <label>Valor inicial
+                    <InputNumber class="form-control" @bind-Value="_newParameter.Value" />
+                </label>
+                <label>
+                    <span>Descripción</span>
+                    <InputText class="form-control" @bind-Value="_newParameter.Description" />
+                </label>
+                <label>
+                    <input type="checkbox" @bind="_newParameter.IsEditable" />
+                    Editable
+                </label>
+            </div>
+            <div class="card-actions">
+                <button class="btn-primary" @onclick="CreateParameterAsync" disabled="@_saving">Guardar</button>
+                <button class="btn-secondary" @onclick="CancelAddForm" disabled="@_saving">Cancelar</button>
+            </div>
+        </section>
+    }
+
+    <table class="parameters-table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Clave</th>
+                <th>Categoría</th>
+                <th>Valor</th>
+                <th>Unidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var parameter in _parameters)
+            {
+                <tr>
+                    <td>@parameter.Name</td>
+                    <td>@parameter.Key</td>
+                    <td>@parameter.Category</td>
+                    <td>
+                        <InputNumber class="form-control" @bind-Value="parameter.Value" disabled="!parameter.IsEditable" />
+                    </td>
+                    <td>@parameter.Unit</td>
+                    <td class="row-actions">
+                        @if (parameter.IsEditable)
+                        {
+                            <button class="btn-small" @onclick="() => SaveParameterAsync(parameter)" disabled="@_saving">Guardar</button>
+                        }
+                        else
+                        {
+                            <span class="badge">Solo lectura</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private readonly List<SystemParameterDto> _parameters = [];
+    private readonly List<string> _categories =
+    [
+        "Operation",
+        "Corridor",
+        "Emissions",
+        "Pricing",
+        "General"
+    ];
+    private bool _isLoading = true;
+    private string? _error;
+    private bool _saving;
+    private bool _showAddForm;
+    private SystemParameterDto _newParameter = CreateEmptyParameter();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _isLoading = true;
+        _parameters.Clear();
+        try
+        {
+            var items = await ApiClient.GetParametersAsync();
+            _parameters.AddRange(items.OrderBy(p => p.Category).ThenBy(p => p.Name));
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudieron cargar los parámetros. {ex.Message}";
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task SaveParameterAsync(SystemParameterDto parameter)
+    {
+        _saving = true;
+        try
+        {
+            await ApiClient.UpdateParameterAsync(parameter.Key, parameter);
+        }
+        catch (Exception ex)
+        {
+            _error = $"Error guardando parámetro {parameter.Name}: {ex.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private async Task CreateParameterAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_newParameter.Key) || string.IsNullOrWhiteSpace(_newParameter.Name))
+        {
+            _error = "Nombre y clave son obligatorios.";
+            return;
+        }
+
+        _saving = true;
+        try
+        {
+            await ApiClient.UpdateParameterAsync(_newParameter.Key, _newParameter);
+            _showAddForm = false;
+            _newParameter = CreateEmptyParameter();
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudo crear el parámetro: {ex.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private void ShowAddForm()
+    {
+        _error = null;
+        _showAddForm = true;
+    }
+
+    private void CancelAddForm()
+    {
+        _showAddForm = false;
+        _newParameter = CreateEmptyParameter();
+    }
+
+    private async Task ImportSampleParametersAsync()
+    {
+        _saving = true;
+        _error = null;
+        try
+        {
+            await ApiClient.ImportParametersAsync();
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudo importar el archivo de ejemplo: {ex.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private static SystemParameterDto CreateEmptyParameter() => new()
+    {
+        Key = string.Empty,
+        Name = string.Empty,
+        Category = "Operation",
+        Unit = string.Empty,
+        Description = string.Empty,
+        Value = 0,
+        IsEditable = true
+    };
+}

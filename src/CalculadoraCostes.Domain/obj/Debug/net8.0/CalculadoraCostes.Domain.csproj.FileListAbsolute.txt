@@ -1,0 +1,11 @@
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\bin\Debug\net8.0\CalculadoraCostes.Domain.deps.json
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\bin\Debug\net8.0\CalculadoraCostes.Domain.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\bin\Debug\net8.0\CalculadoraCostes.Domain.pdb
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\CalculadoraCostes.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\CalculadoraCostes.Domain.AssemblyInfoInputs.cache
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\CalculadoraCostes.Domain.AssemblyInfo.cs
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\CalculadoraCostes.Domain.csproj.CoreCompileInputs.cache
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\CalculadoraCostes.Domain.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\refint\CalculadoraCostes.Domain.dll
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\CalculadoraCostes.Domain.pdb
+C:\Users\rodrigo.sanandres\DevRodimux\calculadora\src\CalculadoraCostes.Domain\obj\Debug\net8.0\ref\CalculadoraCostes.Domain.dll

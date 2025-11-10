@@ -1,0 +1,26 @@
+﻿{
+  "energies": [],
+  "components": {},
+  "parameters": {
+    "KmsPerDay": 300,
+    "DaysPerMonth": 22,
+    "DriverSalary": 3048,
+    "Margin": 0.04,
+    "TrailerPrice": 450,
+    "DollyPrice": 200,
+    "DuoConsumptionSaving": 0.3,
+    "YardCost": 50,
+    "TransportCost": 500,
+    "DeliveriesPerMonth": 10,
+    "CorridorKmDuo": 600,
+    "TripsPerMonth": 1,
+    "TollKmSimple": 0,
+    "TollKmDuo": 0,
+    "TollPricePerKmSimple": 0.26,
+    "TollPricePerKmDuo": 0.39,
+    "ExtraDriverFactor": 0.05,
+    "PricePerTonCO2": 0,
+    "TariffCorrectionFactor": 0.12,
+    "SecondDriverThreshold": 700
+  }
+}

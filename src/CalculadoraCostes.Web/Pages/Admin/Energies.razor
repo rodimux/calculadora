@@ -1,0 +1,411 @@
+@page "/admin/energies"
+@inject Services.ApiClient ApiClient
+
+<PageTitle>Administración - Energías</PageTitle>
+
+<h1>Administración de energías</h1>
+
+<style>
+    .energy-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .energy-tab {
+        border: none;
+        background: #e5e7eb;
+        padding: 0.4rem 0.9rem;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .energy-tab.active {
+        background: #1d4ed8;
+        color: #fff;
+    }
+</style>
+
+@{
+    var activeEnergy = GetActiveEnergy();
+}
+
+@if (_isLoading)
+{
+    <p class="status">Cargando energías...</p>
+}
+else if (!string.IsNullOrEmpty(_error))
+{
+    <p class="status error">@_error</p>
+}
+else
+{
+    <div class="admin-actions">
+        <button class="btn-secondary" @onclick="AddNewEnergy" disabled="@_saving">Añadir nueva energía</button>
+        <button class="btn-secondary" @onclick="ImportEnergiesAsync" disabled="@_saving">Importar energías desde Excel</button>
+    </div>
+
+    if (_energies.Count == 0)
+    {
+        <p class="status">No hay energías registradas.</p>
+        <p class="status">Pulsa "Añadir nueva energía" para crear la primera.</p>
+    }
+    else
+    {
+        <div class="energy-tabs">
+            @foreach (var energy in _energies)
+            {
+                var isActive = ReferenceEquals(energy, activeEnergy);
+                <button type="button"
+                        class="energy-tab @(isActive ? "active" : null)"
+                        @onclick="() => SetActiveEnergy(energy)">
+                    @energy.Name
+                </button>
+            }
+        </div>
+
+        if (activeEnergy is not null)
+        {
+            var energy = activeEnergy;
+            <section class="card">
+                <header class="card-header">
+                    <div>
+                        <h2>@energy.Name <small>@energy.Code</small></h2>
+                        <p>@energy.Mode • @energy.Family</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-primary" @onclick="() => SaveEnergyAsync(energy)" disabled="@_saving">@(_saving ? "Guardando..." : "Guardar")</button>
+                        <button class="btn-danger" @onclick="() => DeleteEnergyAsync(energy)" disabled="@_saving">Eliminar</button>
+                    </div>
+                </header>
+
+                <div class="card-body">
+                    <div class="form-grid">
+                        <label>Código
+                            <InputText class="form-control" @bind-Value="energy.Code" />
+                        </label>
+                        <label>Nombre
+                            <InputText class="form-control" @bind-Value="energy.Name" />
+                        </label>
+                        <label>Modo
+                            <InputSelect class="form-control" @bind-Value="energy.Mode">
+                                @foreach (var mode in _energyModes)
+                                {
+                                    <option value="@mode">@mode</option>
+                                }
+                            </InputSelect>
+                        </label>
+                        <label>Familia
+                            <InputSelect class="form-control" @bind-Value="energy.Family">
+                                @foreach (var family in _energyFamilies)
+                                {
+                                    <option value="@family">@family</option>
+                                }
+                            </InputSelect>
+                        </label>
+                        <label>Precio unidad
+                            <InputNumber class="form-control" @bind-Value="energy.PricePerUnit" />
+                        </label>
+                        <label>Consumo / 100km
+                            <InputNumber class="form-control" @bind-Value="energy.ConsumptionPer100Km" />
+                        </label>
+                        <label>Renting mensual
+                            <InputNumber class="form-control" @bind-Value="energy.RentingCostPerMonth" />
+                        </label>
+                        <label>Factor CO₂
+                            <InputNumber class="form-control" @bind-Value="energy.EmissionFactorPerUnit" />
+                        </label>
+                        <label>% Renovable
+                            <InputNumber class="form-control" @bind-Value="energy.RenewableShare" />
+                        </label>
+                        <label>% Reducción
+                            <InputNumber class="form-control" @bind-Value="energy.EmissionReduction" />
+                        </label>
+                        <label>Base (opcional)
+                            <input class="form-control" value="@(energy.BaseEnergyId?.ToString() ?? string.Empty)"
+                                   @onchange="e => energy.BaseEnergyId = ParseNullableGuid(e.Value?.ToString())" />
+                        </label>
+                        <label>Referencia emisiones
+                            <input class="form-control" value="@(energy.EmissionReferenceEnergyId?.ToString() ?? string.Empty)"
+                                   @onchange="e => energy.EmissionReferenceEnergyId = ParseNullableGuid(e.Value?.ToString())" />
+                        </label>
+                        <label>
+                            <input type="checkbox" @bind="energy.InheritEmissionFromBase" />
+                            Heredar emisiones base
+                        </label>
+                        <label>
+                            <input type="checkbox" @bind="energy.IsActive" />
+                            Activo
+                        </label>
+                    </div>
+
+                    <h3>Componentes de coste</h3>
+                    <table class="components-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Orden</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var component in energy.CostComponents.OrderBy(c => c.Order).ToList())
+                            {
+                                <tr>
+                                    <td><InputText class="form-control" @bind-Value="component.Name" /></td>
+                                    <td>
+                                        <InputSelect class="form-control" @bind-Value="component.Category">
+                                            @foreach (var category in _componentCategories)
+                                            {
+                                                <option value="@category">@category</option>
+                                            }
+                                        </InputSelect>
+                                    </td>
+                                    <td>
+                                        <InputSelect class="form-control" @bind-Value="component.ValueType">
+                                            @foreach (var type in _valueTypes)
+                                            {
+                                                <option value="@type">@type</option>
+                                            }
+                                        </InputSelect>
+                                    </td>
+                                    <td><InputNumber class="form-control" @bind-Value="component.Value" /></td>
+                                    <td><InputNumber class="form-control" @bind-Value="component.Order" /></td>
+                                    <td class="row-actions">
+                                        <button class="btn-small" @onclick="() => SaveComponentAsync(energy, component)" disabled="@_saving">Guardar</button>
+                                        <button class="btn-small danger" @onclick="() => DeleteComponentAsync(energy, component)" disabled="@_saving">Eliminar</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <button class="btn-secondary" @onclick="() => AddComponent(energy)" disabled="@_saving">Añadir componente</button>
+                </div>
+            </section>
+        }
+    }
+}
+
+@code {
+    private readonly List<string> _energyModes = new() { "Simple", "Duo" };
+    private readonly List<string> _energyFamilies = new() { "Diesel", "GasNatural", "Hidrogeno", "Biometano", "Electrico", "Hvo", "Otro" };
+    private readonly List<string> _componentCategories = new() { "Fixed", "Variable", "Overhead" };
+    private readonly List<string> _valueTypes = new() { "MonthlyAmount", "PerKilometerRate", "PercentageOverSubtotal" };
+
+    private readonly List<EnergyDto> _energies = [];
+    private bool _isLoading = true;
+    private string? _error;
+    private bool _saving;
+    private EnergyDto? _activeEnergy;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _isLoading = true;
+        _error = null;
+        _energies.Clear();
+        try
+        {
+            var data = await ApiClient.GetEnergiesAsync();
+            _energies.AddRange(data.OrderBy(e => e.Name));
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudieron cargar las energías. {ex.Message}";
+        }
+        finally
+        {
+            _isLoading = false;
+            _activeEnergy = _energies.FirstOrDefault();
+        }
+    }
+
+    private async Task SaveEnergyAsync(EnergyDto energy)
+    {
+        _saving = true;
+        try
+        {
+            if (energy.Id == Guid.Empty)
+            {
+                var created = await ApiClient.CreateEnergyAsync(energy);
+                energy.Id = created.Id;
+                SetActiveEnergy(energy);
+            }
+            else
+            {
+                await ApiClient.UpdateEnergyAsync(energy.Id, energy);
+                SetActiveEnergy(energy);
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = $"Error guardando energía {energy.Name}: {ex.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private async Task DeleteEnergyAsync(EnergyDto energy)
+    {
+        if (energy.Id == Guid.Empty)
+        {
+            _energies.Remove(energy);
+            if (ReferenceEquals(_activeEnergy, energy))
+            {
+                _activeEnergy = _energies.FirstOrDefault();
+            }
+            return;
+        }
+
+        _saving = true;
+        try
+        {
+            await ApiClient.DeleteEnergyAsync(energy.Id);
+            _energies.Remove(energy);
+            if (ReferenceEquals(_activeEnergy, energy))
+            {
+                _activeEnergy = _energies.FirstOrDefault();
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudo eliminar {energy.Name}: {ex.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private async Task SaveComponentAsync(EnergyDto energy, EnergyCostComponentDto component)
+    {
+        _saving = true;
+        try
+        {
+            component.EnergyId = energy.Id;
+            var updated = await ApiClient.UpsertComponentAsync(energy.Id, component);
+            if (updated is not null)
+            {
+                MergeComponent(component, updated);
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudo actualizar el componente {component.Name}: {ex.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private async Task DeleteComponentAsync(EnergyDto energy, EnergyCostComponentDto component)
+    {
+        if (component.Id == Guid.Empty)
+        {
+            energy.CostComponents.Remove(component);
+            return;
+        }
+
+        _saving = true;
+        try
+        {
+            await ApiClient.DeleteComponentAsync(energy.Id, component.Id);
+            energy.CostComponents.Remove(component);
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudo eliminar el componente {component.Name}: {ex.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private void AddComponent(EnergyDto energy)
+    {
+        energy.CostComponents.Add(new EnergyCostComponentDto
+        {
+            Id = Guid.Empty,
+            EnergyId = energy.Id,
+            Name = "Nuevo componente",
+            Category = "Fixed",
+            ValueType = "MonthlyAmount",
+            Value = 0,
+            Order = energy.CostComponents.Count + 1,
+            IsEditable = true
+        });
+    }
+
+    private void AddNewEnergy()
+    {
+        var newEnergy = new EnergyDto
+        {
+            Id = Guid.Empty,
+            Code = $"ENERGIA_{_energies.Count + 1}",
+            Name = "Nueva energía",
+            Mode = "Simple",
+            Family = "Otro",
+            IsActive = true,
+            CostComponents = new List<EnergyCostComponentDto>()
+        };
+
+        _energies.Insert(0, newEnergy);
+        _activeEnergy = newEnergy;
+    }
+
+    private async Task ImportEnergiesAsync()
+    {
+        _saving = true;
+        _error = null;
+        try
+        {
+            await ApiClient.ImportEnergiesAsync();
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudieron importar las energías: {ex.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private static void MergeComponent(EnergyCostComponentDto target, EnergyCostComponentDto source)
+    {
+        target.Id = source.Id;
+        target.EnergyId = source.EnergyId;
+        target.Key = source.Key;
+        target.Name = source.Name;
+        target.Category = source.Category;
+        target.ValueType = source.ValueType;
+        target.Value = source.Value;
+        target.Order = source.Order;
+        target.IsEditable = source.IsEditable;
+        target.Notes = source.Notes;
+    }
+
+    private static Guid? ParseNullableGuid(string? input)
+        => Guid.TryParse(input, out var value) ? value : null;
+
+    private EnergyDto? GetActiveEnergy()
+        => _activeEnergy ??= _energies.FirstOrDefault();
+
+    private void SetActiveEnergy(EnergyDto energy)
+        => _activeEnergy = energy;
+}

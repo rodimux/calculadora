@@ -1,0 +1,127 @@
+@page "/"
+@inject Services.ApiClient ApiClient
+
+<PageTitle>Calculadora de Costes</PageTitle>
+
+<h1>Calculadora comparativa de energías</h1>
+
+<EditForm Model="_request" OnValidSubmit="HandleSubmit">
+    <div class="form-grid">
+        <div class="form-field">
+            <label for="kms">Km por día</label>
+            <InputNumber id="kms" @bind-Value="_request.KmsPerDay" class="form-control" />
+        </div>
+        <div class="form-field">
+            <label for="days">Días por mes</label>
+            <InputNumber id="days" @bind-Value="_request.DaysPerMonth" class="form-control" />
+        </div>
+        <div class="form-field">
+            <label for="trailer">Tipo de remolque</label>
+            <InputSelect id="trailer" @bind-Value="_request.TrailerType" class="form-control">
+                <option value="@TrailerTypeDto.Trailer">Trailer</option>
+                <option value="@TrailerTypeDto.Dolly">Dolly</option>
+            </InputSelect>
+        </div>
+        <div class="form-field">
+            <label for="margin">Margen (opcional)</label>
+            <InputNumber id="margin" @bind-Value="_request.MarginOverride" class="form-control" />
+            <small>Ejemplo: 0.2 para 20%</small>
+        </div>
+        <div class="form-field">
+            <label for="co2">Precio t CO₂ (opcional)</label>
+            <InputNumber id="co2" @bind-Value="_request.PricePerTonCo2Override" class="form-control" />
+        </div>
+    </div>
+    <button class="btn-primary" type="submit" disabled="@_isLoading">Calcular</button>
+</EditForm>
+
+@if (_isLoading)
+{
+    <p class="status">Calculando...</p>
+}
+else if (!string.IsNullOrEmpty(_error))
+{
+    <p class="status error">@_error</p>
+}
+else if (_response is not null && _response.Results.Count > 0)
+{
+    <p class="resume">
+        Cálculo realizado para <strong>@_response.KmsPerDay</strong> km/día y <strong>@_response.DaysPerMonth</strong> días/mes.
+    </p>
+    <div class="table-responsive">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Energía</th>
+                    <th>€/km (energía)</th>
+                    <th>€/km (carbono)</th>
+                    <th>€/km (total)</th>
+                    <th>€/día</th>
+                    <th>Tarifa recomendada</th>
+                    <th>CO₂ kg/km</th>
+                    <th>Δ CO₂ vs Diésel</th>
+                    <th>Δ Coste vs Diésel</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in _response.Results)
+                {
+                    <tr>
+                        <td>
+                            <div class="energy-name">
+                                <span>@item.EnergyName</span>
+                                <small>@item.Mode</small>
+                            </div>
+                        </td>
+                        <td>@item.EnergyCostPerKm.ToString("0.0000")</td>
+                        <td>@item.CarbonCostPerKm.ToString("0.0000")</td>
+                        <td>@item.TotalCostPerKm.ToString("0.0000")</td>
+                        <td>@item.CostPerDay.ToString("0.00")</td>
+                        <td>@item.TariffSuggested.ToString("0.00")</td>
+                        <td>@item.EmissionsKgPerKm.ToString("0.0000")</td>
+                        <td>@FormatPercent(item.EmissionReductionVsDiesel)</td>
+                        <td>@FormatPercent(item.ExtraCostVsDieselPercentage)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="status">Introduce los parámetros y pulsa calcular para obtener resultados.</p>
+}
+
+@code {
+    private readonly CalculationRequestDto _request = new()
+    {
+        TrailerType = TrailerTypeDto.Trailer
+    };
+
+    private CalculationResponseDto? _response;
+    private bool _isLoading;
+    private string? _error;
+
+    private async Task HandleSubmit()
+    {
+        _isLoading = true;
+        _error = null;
+        _response = null;
+        try
+        {
+            var result = await ApiClient.CalculateAsync(_request);
+            _response = result;
+        }
+        catch (Exception ex)
+        {
+            _error = $"No se pudo obtener el cálculo. {ex.Message}";
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private static string FormatPercent(decimal? value)
+        => value.HasValue ? $"{value.Value:P1}" : "-";
+}
