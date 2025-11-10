@@ -67,6 +67,7 @@ La API lee dos valores en `src/CalculadoraCostes.Api/appsettings.json`:
 
 - `DatabaseProvider`: ahora est?? en `Sqlite` por defecto para facilitar despliegues personales (se crea `calculadora.db` en el directorio de trabajo). Cambia a `SqlServer` cuando necesites apuntar a una instancia de SQL Server.
 - `ConnectionStrings:DefaultConnection`: cadena asociada al proveedor elegido (`Data Source=calculadora.db` para SQLite o la cadena de tu servidor SQL).
+- `Swagger:Enabled`: controla si la UI de Swagger se expone tambi??n en entornos de producci??n (Render, Railway, etc.). Ponlo a `true` cuando quieras probar la API online.
 
 El arranque ejecuta `context.Database.Migrate()` as?? que no necesitas comandos extra: basta con ajustar estos valores y la base se crear??/actualizar?? sola.
 

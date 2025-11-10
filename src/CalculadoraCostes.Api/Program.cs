@@ -20,7 +20,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+var swaggerEnabled = builder.Configuration.GetValue<bool?>("Swagger:Enabled")
+    ?? builder.Environment.IsDevelopment();
+
+if (swaggerEnabled)
+{
+    builder.Services.AddSwaggerGen();
+}
 builder.Services.AddProblemDetails();
 builder.Services.AddCors(options =>
 {
@@ -38,7 +45,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (swaggerEnabled)
 {
     app.UseSwagger();
     app.UseSwaggerUI();

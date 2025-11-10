@@ -1,6 +1,96 @@
 ﻿{
-  "energies": [],
-  "components": {},
+  "energies": [
+    { "name": "DIESEL", "price": 1.0, "consumption_per_100km": 28.0, "rent": 2000 },
+    { "name": "GAS NATURAL", "price": 1.7, "consumption_per_100km": 26.4, "rent": 2400 },
+    { "name": "H2", "price": 7.0, "consumption_per_100km": 9.0, "rent": 6200 },
+    { "name": "BIOMETANO", "price": 1.8, "consumption_per_100km": 26.4, "rent": 2400 },
+    { "name": "ELECTRICO", "price": 0.23, "consumption_per_100km": 183.0, "rent": 4000 },
+    { "name": "HVO", "price": 1.35, "consumption_per_100km": 28.0, "rent": 2000 },
+    { "name": "DUO GASOIL", "price": 1.0, "consumption_per_100km": 39.2, "rent": 2200 },
+    { "name": "DUO BIOMETANO", "price": 1.8, "consumption_per_100km": 36.96, "rent": 2400 },
+    { "name": "DUO ELECTRICO", "price": 0.23, "consumption_per_100km": 128.1, "rent": 4000 },
+    { "name": "DUO H2", "price": 7.0, "consumption_per_100km": 12.6, "rent": 6200 },
+    { "name": "DUO HVO", "price": 1.35, "consumption_per_100km": 41.0, "rent": 2200 }
+  ],
+  "components": {
+    "DIESEL": [
+      { "name": "Cuota TRACTORA", "category": "Fixed", "value_type": "MonthlyAmount", "value": 2000 },
+      { "name": "Seguro flota", "category": "Fixed", "value_type": "MonthlyAmount", "value": 300 },
+      { "name": "Mantenimiento", "category": "Fixed", "value_type": "MonthlyAmount", "value": 150 },
+      { "name": "Gasoil (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.31 },
+      { "name": "Planificación flota", "category": "Overhead", "value_type": "MonthlyAmount", "value": 275 }
+    ],
+    "GAS NATURAL": [
+      { "name": "Cuota TRACTORA", "category": "Fixed", "value_type": "MonthlyAmount", "value": 2400 },
+      { "name": "Seguro flota", "category": "Fixed", "value_type": "MonthlyAmount", "value": 320 },
+      { "name": "Mantenimiento", "category": "Fixed", "value_type": "MonthlyAmount", "value": 180 },
+      { "name": "Gas natural (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.27 },
+      { "name": "Planificación flota", "category": "Overhead", "value_type": "MonthlyAmount", "value": 275 }
+    ],
+    "H2": [
+      { "name": "Renting hidrógeno", "category": "Fixed", "value_type": "MonthlyAmount", "value": 6200 },
+      { "name": "Seguro especial", "category": "Fixed", "value_type": "MonthlyAmount", "value": 450 },
+      { "name": "Mantenimiento célula", "category": "Fixed", "value_type": "MonthlyAmount", "value": 220 },
+      { "name": "H2 verde (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.63 },
+      { "name": "Infraestructura H2", "category": "Overhead", "value_type": "MonthlyAmount", "value": 320 }
+    ],
+    "BIOMETANO": [
+      { "name": "Cuota TRACTORA", "category": "Fixed", "value_type": "MonthlyAmount", "value": 2400 },
+      { "name": "Seguro flota", "category": "Fixed", "value_type": "MonthlyAmount", "value": 320 },
+      { "name": "Mantenimiento", "category": "Fixed", "value_type": "MonthlyAmount", "value": 180 },
+      { "name": "Biometano (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.29 },
+      { "name": "Planificación flota", "category": "Overhead", "value_type": "MonthlyAmount", "value": 275 }
+    ],
+    "ELECTRICO": [
+      { "name": "Renting eléctrico", "category": "Fixed", "value_type": "MonthlyAmount", "value": 4000 },
+      { "name": "Seguro flota", "category": "Fixed", "value_type": "MonthlyAmount", "value": 400 },
+      { "name": "Batería / mantenimiento", "category": "Fixed", "value_type": "MonthlyAmount", "value": 350 },
+      { "name": "Energía (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.18 },
+      { "name": "Planificación flota", "category": "Overhead", "value_type": "MonthlyAmount", "value": 275 }
+    ],
+    "HVO": [
+      { "name": "Cuota TRACTORA", "category": "Fixed", "value_type": "MonthlyAmount", "value": 2000 },
+      { "name": "Seguro flota", "category": "Fixed", "value_type": "MonthlyAmount", "value": 300 },
+      { "name": "Mantenimiento", "category": "Fixed", "value_type": "MonthlyAmount", "value": 150 },
+      { "name": "HVO (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.34 },
+      { "name": "Planificación flota", "category": "Overhead", "value_type": "MonthlyAmount", "value": 275 }
+    ],
+    "DUO GASOIL": [
+      { "name": "Cuota TRACTORA DUO", "category": "Fixed", "value_type": "MonthlyAmount", "value": 2200 },
+      { "name": "Seguro dúo", "category": "Fixed", "value_type": "MonthlyAmount", "value": 320 },
+      { "name": "Cuota Dolly", "category": "Fixed", "value_type": "MonthlyAmount", "value": 200 },
+      { "name": "Gasóleo (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.42 },
+      { "name": "Planificación corredor", "category": "Overhead", "value_type": "MonthlyAmount", "value": 350 }
+    ],
+    "DUO BIOMETANO": [
+      { "name": "Cuota TRACTORA DUO", "category": "Fixed", "value_type": "MonthlyAmount", "value": 2400 },
+      { "name": "Seguro dúo", "category": "Fixed", "value_type": "MonthlyAmount", "value": 340 },
+      { "name": "Cuota Dolly", "category": "Fixed", "value_type": "MonthlyAmount", "value": 200 },
+      { "name": "Biometano (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.39 },
+      { "name": "Planificación corredor", "category": "Overhead", "value_type": "MonthlyAmount", "value": 350 }
+    ],
+    "DUO ELECTRICO": [
+      { "name": "Renting doble pack", "category": "Fixed", "value_type": "MonthlyAmount", "value": 4200 },
+      { "name": "Seguro dúo", "category": "Fixed", "value_type": "MonthlyAmount", "value": 450 },
+      { "name": "Cuota Dolly", "category": "Fixed", "value_type": "MonthlyAmount", "value": 200 },
+      { "name": "Energía (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.22 },
+      { "name": "Planificación corredor", "category": "Overhead", "value_type": "MonthlyAmount", "value": 360 }
+    ],
+    "DUO H2": [
+      { "name": "Renting hidrógeno duo", "category": "Fixed", "value_type": "MonthlyAmount", "value": 6400 },
+      { "name": "Seguro dúo", "category": "Fixed", "value_type": "MonthlyAmount", "value": 500 },
+      { "name": "Cuota Dolly", "category": "Fixed", "value_type": "MonthlyAmount", "value": 200 },
+      { "name": "H2 verde (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.7 },
+      { "name": "Infraestructura H2", "category": "Overhead", "value_type": "MonthlyAmount", "value": 360 }
+    ],
+    "DUO HVO": [
+      { "name": "Cuota TRACTORA DUO", "category": "Fixed", "value_type": "MonthlyAmount", "value": 2200 },
+      { "name": "Seguro dúo", "category": "Fixed", "value_type": "MonthlyAmount", "value": 320 },
+      { "name": "Cuota Dolly", "category": "Fixed", "value_type": "MonthlyAmount", "value": 200 },
+      { "name": "HVO (€/km)", "category": "Variable", "value_type": "PerKilometerRate", "value": 0.46 },
+      { "name": "Planificación corredor", "category": "Overhead", "value_type": "MonthlyAmount", "value": 350 }
+    ]
+  },
   "parameters": {
     "KmsPerDay": 300,
     "DaysPerMonth": 22,
